@@ -98,11 +98,11 @@
 
             if(!localStorage.getItem('solvestatus')){
                 init_solvestatus();
-                console.log(localStorage.getItem('solvestatus') + 'Initialized!');
+                // console.log(localStorage.getItem('solvestatus') + 'Initialized!');
             }
             else{
                 set_solvestatus();
-                console.log(localStorage.getItem('solvestatus'));
+                // console.log(localStorage.getItem('solvestatus'));
             }
             
             
@@ -123,9 +123,9 @@
                         var nowsolvestatus = localStorage.getItem('solvestatus');
                         // nowsolvestatus[i] = 'o';
                         var newsolvestatus = nowsolvestatus.replaceAt(i,'o');
-                        console.log(newsolvestatus);
+                        // console.log(newsolvestatus);
                         localStorage.setItem('solvestatus' , newsolvestatus);
-                        console.log(localStorage.getItem('solvestatus'));
+                        // console.log(localStorage.getItem('solvestatus'));
                         
                         document.getElementById("b1f").innerHTML = "B1F " + correctcountb1 + "/6" + " キーワード:" + kmsg1[i];
                         document.getElementById(formid).placeholder = nowans;
@@ -153,9 +153,9 @@
                         var nowsolvestatus = localStorage.getItem('solvestatus');
                         // nowsolvestatus[i] = 'o';
                         var newsolvestatus = nowsolvestatus.replaceAt(i+6,'o');
-                        console.log(newsolvestatus);
+                        // console.log(newsolvestatus);
                         localStorage.setItem('solvestatus' , newsolvestatus);
-                        console.log(localStorage.getItem('solvestatus'));
+                        // console.log(localStorage.getItem('solvestatus'));
 
                         document.getElementById("b2f").innerHTML = "B2F " + correctcountb2 + "/6" + " キーワード:" + kmsg2[i];
                         document.getElementById(formid).placeholder = nowans;
@@ -183,9 +183,9 @@
                         var nowsolvestatus = localStorage.getItem('solvestatus');
                         // nowsolvestatus[i] = 'o';
                         var newsolvestatus = nowsolvestatus.replaceAt(i+12,'o');
-                        console.log(newsolvestatus);
+                        // console.log(newsolvestatus);
                         localStorage.setItem('solvestatus' , newsolvestatus);
-                        console.log(localStorage.getItem('solvestatus'));
+                        // console.log(localStorage.getItem('solvestatus'));
 
                         document.getElementById("b3f").innerHTML = "B3F " + correctcountb3 + "/6" + " キーワード:" + kmsg3[i];
                         document.getElementById(formid).placeholder = nowans;
@@ -718,11 +718,11 @@
 
     <div id="get_ready" align="left" style="font-size:40px; display:inline; color:blue"> BLUE BLOCK: BASEMENT </div>
     <div id="expl1" style="font-size:20px; color:red;"> ソースコードを見る行為は禁止です。 </div>
-    <div id="expl2"> 一部の謎は検索推奨です。 </div>
+    <div id="expl2"> 検索推奨です。 </div>
     <div id="expl3"> スマホでは最新verの Safari または Google Chrome でのプレーを推奨します。 </div>
     <div id="expl4"> 画面サイズによってはボタンが隠れてしまう場合があります。下までスクロールして見落としが無いよう注意してください。 </div>
     <div id="expl5"> ページを閉じたりリロードしてしまうと，解答状況は保存されますがブロック開始画面に戻ってしまいます。この仕様は謎解きには無関係です。 </div>
-    <div id="expl6"> 謎の答えなどをメモしておくなどすることを推奨します。 </div>
+    <div id="expl6"> 謎の答えなどをメモしておくことを推奨します。 </div>
     <div id="expl7"> 解答は半角英字で入力してください。解答形式に指示がある場合はそれに従ってください。 </div>
 
     <div id="b1f" style="font-size:40px; display:none; color:white;"> B1F 0/6 </div>
