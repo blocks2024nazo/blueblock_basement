@@ -1,4 +1,4 @@
-<html>
+<html></html>
 <head>
 	<meta charset="UTF-8">
 </head>
@@ -31,7 +31,53 @@
         var completeb3 = false;
         var nowfloor = 1;
 
+        // localStorage.clear();
+
+        String.prototype.replaceAt = function(index, txt) {
+            return (this.substring(0 , index) + txt + this.substring(index + txt.length));
+        }
+
+
+        function init_solvestatus(){
+            localStorage.setItem('solvestatus' , 'xxxxxxxxxxxxxxxxxx');
+        }
+
+        function set_solvestatus(){
+            var nowsolvestatus = localStorage.getItem('solvestatus');
+            for(var i = 0;i<6;i++){
+                if(nowsolvestatus[i] == 'o'){
+                    problemcorrects1[i] = true;
+                    correctcountb1++;
+                    var nowp = "b1" + (i+1) + "fo";
+                    document.getElementById(nowp).value = crb1[i];
+                }
+            }
+            if(correctcountb1 >= 2) completeb1 = true;
+
+            for(var i = 6;i<12;i++){
+                if(nowsolvestatus[i] == 'o'){
+                    problemcorrects2[i-6] = true;
+                    correctcountb2++;
+                    var nowp = "b2" + (i+1-6) + "fo";
+                    document.getElementById(nowp).value = crb2[i-6];
+                }
+            }
+            if(correctcountb2 >= 2) completeb2 = true;
+
+            for(var i = 12;i<18;i++){
+                if(nowsolvestatus[i] == 'o'){
+                    problemcorrects3[i-12] = true;
+                    correctcountb3++;
+                    var nowp = "b3" + (i+1-12) + "fo";
+                    document.getElementById(nowp).value = crb3[i-12];
+                }
+            }
+            if(correctcountb3 >= 2) completeb3 = true;
+
+        }
+
         function start_s1(){
+
             document.getElementById("get_ready").style.display = "none";
             document.getElementById("block_start").style.display = "none";
             document.getElementById("expl1").style.display = "none";
@@ -41,17 +87,23 @@
             document.getElementById("expl5").style.display = "none";
             document.getElementById("expl6").style.display = "none";
             document.getElementById("expl7").style.display = "none";
-            // document.getElementById("expl8").style.display = "none";
             document.getElementById("b1f").style.display = "block";
             document.getElementById("submitbutton1").style.display = "inline";
-            // document.getElementById("hebon1").style.display = "block";
-            // document.getElementById("hebonb1").style.display = "inline";
 
             h = 3 , w = 1;
             document.getElementById("b16").style.display = "inline";
             document.body.style.backgroundImage = "url(imgs_DONT_OPENxxxx_fff/greenbrickwall.jpg)";
             document.body.style.backgroundRepeat = "no-repeat";
             document.body.style.backgroundSize = "cover";
+
+            if(!localStorage.getItem('solvestatus')){
+                init_solvestatus();
+                console.log(localStorage.getItem('solvestatus') + 'Initialized!');
+            }
+            else{
+                set_solvestatus();
+                console.log(localStorage.getItem('solvestatus'));
+            }
             
             
             updateb1();
@@ -67,6 +119,14 @@
                     if(nowans == crb1[i] && problemcorrects1[i] == false){
                         problemcorrects1[i] = true;
                         correctcountb1++;
+
+                        var nowsolvestatus = localStorage.getItem('solvestatus');
+                        // nowsolvestatus[i] = 'o';
+                        var newsolvestatus = nowsolvestatus.replaceAt(i,'o');
+                        console.log(newsolvestatus);
+                        localStorage.setItem('solvestatus' , newsolvestatus);
+                        console.log(localStorage.getItem('solvestatus'));
+                        
                         document.getElementById("b1f").innerHTML = "B1F " + correctcountb1 + "/6" + " キーワード:" + kmsg1[i];
                         document.getElementById(formid).placeholder = nowans;
                         var msg = "正解！" + "キーワードは" + kmsg1[i];
@@ -74,6 +134,7 @@
                         if(correctcountb1 == 2){
                             alert("B1Fで2問解いた！ B2Fが開放された！");
                             completeb1 = true;
+                            updateb1();
                         }
                     }
                 }
@@ -88,6 +149,14 @@
                     if(nowans == crb2[i] && problemcorrects2[i] == false){
                         problemcorrects2[i] = true;
                         correctcountb2++;
+                        
+                        var nowsolvestatus = localStorage.getItem('solvestatus');
+                        // nowsolvestatus[i] = 'o';
+                        var newsolvestatus = nowsolvestatus.replaceAt(i+6,'o');
+                        console.log(newsolvestatus);
+                        localStorage.setItem('solvestatus' , newsolvestatus);
+                        console.log(localStorage.getItem('solvestatus'));
+
                         document.getElementById("b2f").innerHTML = "B2F " + correctcountb2 + "/6" + " キーワード:" + kmsg2[i];
                         document.getElementById(formid).placeholder = nowans;
                         var msg = "正解！" + "キーワードは" + kmsg2[i];
@@ -95,6 +164,7 @@
                         if(correctcountb2 == 2){
                             alert("B2Fで2問解いた！ B3Fが開放された！");
                             completeb2 = true;
+                            updateb2();
                         }
                     }
                 }
@@ -109,6 +179,14 @@
                     if(nowans == crb3[i] && problemcorrects3[i] == false){
                         problemcorrects3[i] = true;
                         correctcountb3++;
+                        
+                        var nowsolvestatus = localStorage.getItem('solvestatus');
+                        // nowsolvestatus[i] = 'o';
+                        var newsolvestatus = nowsolvestatus.replaceAt(i+12,'o');
+                        console.log(newsolvestatus);
+                        localStorage.setItem('solvestatus' , newsolvestatus);
+                        console.log(localStorage.getItem('solvestatus'));
+
                         document.getElementById("b3f").innerHTML = "B3F " + correctcountb3 + "/6" + " キーワード:" + kmsg3[i];
                         document.getElementById(formid).placeholder = nowans;
                         var msg = "正解！" + "キーワードは" + kmsg3[i];
@@ -116,6 +194,7 @@
                         if(correctcountb3 == 2){
                             alert("B3Fで2問解いた！ 最深部が開放された！");
                             completeb3 = true;
+                            updateb3();
                         }
                     }
                 }
@@ -127,9 +206,11 @@
                 if(h == crhb4[i] && w == crwb4[i]){
                     var formid = "bfinalfo";
                     var nowans = document.getElementById(formid).value;
-                    if(nowans == crb4[i] && problemcorrects4[i] == false){
+                    if(nowans == crb4[i]){
+                        if(!problemcorrects4[i]){
+                            correctcountb4++;
+                        }
                         problemcorrects4[i] = true;
-                        correctcountb4++;
                         document.getElementById(formid).placeholder = nowans;
                         alert("正解！");
                         if(correctcountb4 >= 1){
@@ -198,10 +279,6 @@
             document.getElementById("go_up21").style.display = "none";
             document.getElementById("submitbutton2").style.display = "none";
             document.getElementById("submitbutton1").style.display = "inline";
-            // document.getElementById("hebon2").style.display = "none";
-            // document.getElementById("hebonb2").style.display = "none";
-            // document.getElementById("hebon1").style.display = "block";
-            // document.getElementById("hebonb1").style.display = "inline";
 
             for(var i = 0;i<6;i++){
                 var nowid = "b2" + (i+1);
@@ -265,12 +342,6 @@
             document.getElementById("submitbutton1").style.display = "none";
             document.getElementById("submitbutton3").style.display = "none";
             document.getElementById("submitbutton2").style.display = "inline";
-            // document.getElementById("hebon1").style.display = "none";
-            // document.getElementById("hebonb1").style.display = "none";
-            // document.getElementById("hebon3").style.display = "none";
-            // document.getElementById("hebonb3").style.display = "none";
-            // document.getElementById("hebon2").style.display = "block";
-            // document.getElementById("hebonb2").style.display = "inline";
             nowfloor = 2;
 
             updateb2();
@@ -311,12 +382,6 @@
             document.getElementById("submitbutton2").style.display = "none";
             document.getElementById("submitbutton4").style.display = "none";
             document.getElementById("submitbutton3").style.display = "inline";
-            // document.getElementById("hebon2").style.display = "none";
-            // document.getElementById("hebonb2").style.display = "none";
-            // document.getElementById("hebon4").style.display = "none";
-            // document.getElementById("hebonb4").style.display = "none";
-            // document.getElementById("hebon3").style.display = "block";
-            // document.getElementById("hebonb3").style.display = "inline";
             nowfloor = 3;
 
             updateb3();
@@ -349,10 +414,6 @@
             document.getElementById("b4f").style.display = "block";
             document.getElementById("submitbutton3").style.display = "none";
             document.getElementById("submitbutton4").style.display = "inline";
-            // document.getElementById("hebon3").style.display = "none";
-            // document.getElementById("hebonb3").style.display = "none";
-            // document.getElementById("hebon4").style.display = "block";
-            // document.getElementById("hebonb4").style.display = "inline";
             nowfloor = 4;
 
             updateb4();
@@ -657,36 +718,33 @@
 
     <div id="get_ready" align="left" style="font-size:40px; display:inline; color:blue"> BLUE BLOCK: BASEMENT </div>
     <div id="expl1" style="font-size:20px; color:red;"> ソースコードを見る行為は禁止です。 </div>
-    <div id="expl2"> 検索行為はしても構いません。 </div>
+    <div id="expl2"> 一部の謎は検索推奨です。 </div>
     <div id="expl3"> スマホでは最新verの Safari または Google Chrome でのプレーを推奨します。 </div>
-    <div id="expl4"> スマホでもプレー可能です。 </div>
-    <div id="expl5"> ページをリロードすると初めから(この注意事項のページから)の再開となります。ご注意ください。 </div>
+    <div id="expl4"> 画面サイズによってはボタンが隠れてしまう場合があります。下までスクロールして見落としが無いよう注意してください。 </div>
+    <div id="expl5"> ページを閉じたりリロードしてしまうと，解答状況は保存されますがブロック開始画面に戻ってしまいます。この仕様は謎解きには無関係です。 </div>
     <div id="expl6"> 謎の答えなどをメモしておくなどすることを推奨します。 </div>
     <div id="expl7"> 解答は半角英字で入力してください。解答形式に指示がある場合はそれに従ってください。 </div>
-    <!-- <div id="expl8"> ひらがなを入力するとヘボン式ローマ字に変換する機能を用意しました。ヘボン式で解答する問題で是非ご利用ください。 </div> -->
 
-    <div id="b1f" style="font-size:50px; display:none; -webkit-text-stroke: 2px white;"> B1F 0/6 </div>
+    <div id="b1f" style="font-size:40px; display:none; color:white;"> B1F 0/6 </div>
     <img src="imgs_DONT_OPENxxxx_fff//b11.PNG" id="b11" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b12.PNG" id="b12" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b13.PNG" id="b13" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b14.PNG" id="b14" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b15.PNG" id="b15" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b16.PNG" id="b16" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
-    <input id="b11fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b12fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b13fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b14fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b15fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b16fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <button id="submitbutton1" onclick="anssubmitb1();" style="display: none; width: 60px; height: 40px"> 送信 </button>
-    <button id="block_start" onclick="start_s1();" style="display:inline; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 700px; left:200px; width:100px; height:100px"> BLOCK START </button>
+    <input id="b11fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b12fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b13fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b14fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b15fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b16fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <button id="submitbutton1" onclick="anssubmitb1();" style="display: none; width:60px; height: 40px;"> 送信 </button>
+    <button id="block_start" onclick="start_s1();" style="display:inline; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:200px; width:100px; height:100px"> BLOCK START </button>
     <button id="go_north" onclick="go_north();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 500px; left:300px; width:100px; height:100px"> 北へ </button>
     <button id="go_south" onclick="go_south();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 700px; left:300px; width:100px; height:100px"> 南へ </button>
     <button id="go_east" onclick="go_east();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:400px; width:100px; height:100px"> 東へ </button>
     <button id="go_west" onclick="go_west();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:200px; width:100px; height:100px"> 西へ </button>
     <button id="go_down12" onclick="go_b2f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> ハシゴでB2Fへ </button>
-    <!-- <input id="hebon1" type="text" placeholder="ひらがなで入力して変換" style="display:none;"> -->
-    <!-- <button id="hebonb1" onclick="hiraganaToRomaji()" style="display: none;"> 変換 </button> -->
 
     <!-- ///////////////////// ここまで B1F /////////////////////-->
     
@@ -696,28 +754,26 @@
 
     </script>
 
-    <div id="b2f" style="font-size:50px; display:none; -webkit-text-stroke: 2px white;"> B2F 0/6 </div>
+    <div id="b2f" style="font-size:40px; display:none; color:white;"> B2F 0/6 </div>
     <img src="imgs_DONT_OPENxxxx_fff//b21.PNG" id="b21" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b22.PNG" id="b22" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b23.PNG" id="b23" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b24.PNG" id="b24" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b25.PNG" id="b25" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b26.PNG" id="b26" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
-    <input id="b21fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b22fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b23fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b24fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b25fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b26fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <button id="submitbutton2" onclick="anssubmitb2();" style="display: none; width: 60px; height: 40px"> 送信 </button>
+    <input id="b21fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b22fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b23fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b24fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b25fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b26fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <button id="submitbutton2" onclick="anssubmitb2();" style="display: none; width:60px; height: 40px;"> 送信 </button>
     <button id="go_north" onclick="go_north();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 500px; left:300px; width:100px; height:100px"> 北へ </button>
     <button id="go_south" onclick="go_south();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 700px; left:300px; width:100px; height:100px"> 南へ </button>
     <button id="go_east" onclick="go_east();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:400px; width:100px; height:100px"> 東へ </button>
     <button id="go_west" onclick="go_west();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:200px; width:100px; height:100px"> 西へ </button>
     <button id="go_down23" onclick="go_b3f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> ハシゴでB3Fへ </button>
     <button id="go_up21" onclick="go_b1f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> ハシゴでB1Fへ </button>
-    <!--<input id="hebon2" type="text" placeholder="ひらがなで入力して変換" style="display:none;"> -->
-    <!-- <button id="hebonb2" onclick="hiraganaToRomaji()" style="display: none;"> 変換 </button> -->
 
     <!-- ///////////////////// ここまで STEP 2 /////////////////////-->
     
@@ -727,41 +783,37 @@
 
     </script>
 
-    <div id="b3f" style="font-size:50px; display:none; -webkit-text-stroke: 2px white;"> B3F 0/6 </div>
+    <div id="b3f" style="font-size:40px; display:none; color:white;"> B3F 0/6 </div>
     <img src="imgs_DONT_OPENxxxx_fff//b31.PNG" id="b31" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b32.PNG" id="b32" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b33.PNG" id="b33" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b34.PNG" id="b34" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b35.PNG" id="b35" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
     <img src="imgs_DONT_OPENxxxx_fff//b36.PNG" id="b36" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
-    <input id="b31fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b32fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b33fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b34fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b35fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <input id="b36fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <button id="submitbutton3" onclick="anssubmitb3();" style="display: none; width: 60px; height: 40px"> 送信 </button>
+    <input id="b31fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b32fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b33fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b34fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b35fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <input id="b36fo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <button id="submitbutton3" onclick="anssubmitb3();" style="display: none; width:60px; height: 40px;"> 送信 </button>
     <button id="go_north" onclick="go_north();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 500px; left:300px; width:100px; height:100px"> 北へ </button>
     <button id="go_south" onclick="go_south();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 700px; left:300px; width:100px; height:100px"> 南へ </button>
     <button id="go_east" onclick="go_east();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:400px; width:100px; height:100px"> 東へ </button>
     <button id="go_west" onclick="go_west();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:200px; width:100px; height:100px"> 西へ </button>
     <button id="go_down34" onclick="go_b4f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> 最深部へ </button>
     <button id="go_up32" onclick="go_b2f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> ハシゴでB2Fへ </button>
-    <!-- <input id="hebon3" type="text" placeholder="ひらがなで入力して変換" style="display:none;"> -->
-    <!-- <button id="hebonb3" onclick="hiraganaToRomaji()" style="display: none;"> 変換 </button> -->
 
     <!-- ///////////////////// ここから 最深部 /////////////////////-->
-    <div id="b4f" style="font-size:50px; display:none; -webkit-text-stroke: 2px white;"> FINAL </div>
+    <div id="b4f" style="font-size:40px; display:none; color:white;"> FINAL </div>
     <img src="imgs_DONT_OPENxxxx_fff//bfinal.PNG" id="bfinal" style="display:none; width:640; height:360; max-width: 75%; max-height:75%;"></img>
-    <input id="bfinalfo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:30px">
-    <button id="submitbutton4" onclick="anssubmitb4();" style="display: none; width: 60px; height: 40px"> 送信 </button>
+    <input id="bfinalfo" type="text" placeholder="解答を半角英字で入力" style="display: none; height:40px">
+    <button id="submitbutton4" onclick="anssubmitb4();" style="display: none; width:60px; height: 40px;"> 送信 </button>
     <button id="go_north" onclick="go_north();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 500px; left:300px; width:100px; height:100px"> 北へ </button>
     <button id="go_south" onclick="go_south();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 700px; left:300px; width:100px; height:100px"> 南へ </button>
     <button id="go_east" onclick="go_east();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:400px; width:100px; height:100px"> 東へ </button>
     <button id="go_west" onclick="go_west();" style="display:none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:200px; width:100px; height:100px"> 西へ </button>
     <button id="go_up43" onclick="go_b3f();" style="display: none; font-family:Times New Roman; border:3px solid; font-size:20px; position:absolute; top: 600px; left:300px; width:100px; height:100px"> ハシゴでB3Fへ </button>
-    <!-- <input id="hebon4" type="text" placeholder="ひらがなで入力して変換" style="display:none;"> -->
-    <!-- <button id="hebonb4" onclick="hiraganaToRomaji()" style="display: none;"> 変換 </button> -->
 
     <noscript><p> Javascriptをオンにしてください。 </p></noscript>
 </body>
